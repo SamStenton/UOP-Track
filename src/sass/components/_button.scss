@@ -1,0 +1,10 @@
+button, .button {
+    margin: 5px 5px 5px 0px;
+    padding: 10px;
+    border: 0;
+    background: light-grey;
+    cursor: pointer;
+    outline: none;
+}
+
+.with-carret:after {content:" >";}
