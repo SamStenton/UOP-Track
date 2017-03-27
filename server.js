@@ -11,9 +11,10 @@ var DB          = require('./database/db.js');
 var User        = require('./models/user.js');
 var db          = new DB();
 
-User.create({
-    name: "Samuel Stenton",
-    email: 'sthstenton@gmail.com'
+User.where({name: 'James Wallis'}, function(users) {
+	for (var user in users) {
+		users[user].remove()
+	}
 });
 
 // configure app to use bodyParser()

@@ -55,11 +55,31 @@ class DB {
      */
     insert(table, columns) {
         // Insert Item
-
-        this.query(`INSERT INTO ${table} SET (?)`, columns, function(error, results) {
+        this.query(`INSERT INTO ${table} SET ?`, Object.assign({}, columns), function(error, results) {
             if (error) {throw error}
             console.log(results.message)
         })
+    }
+
+    update(table, where, attributes) {
+        this.query(`UPDATE ${table} SET ? WHERE ${where}`, attributes, function(error, results){
+            console.log(results)
+        });
+    }
+
+    delete(table, where) {
+        this.query(`DELETE FROM ${table} WHERE ${where}`);
+    }
+
+    where(table, query, callback) {
+        var whereString = ""
+        for (var clause in query) {
+            whereString += clause + " = '" + query[clause] + "',"
+        }
+        // Remove trailing comma
+        whereString = whereString.replace(/,\s*$/, "");
+
+        this.query(`SELECT * FROM ${table} WHERE ${whereString}`, callback);
     }
 }
 
