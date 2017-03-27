@@ -1,0 +1,25 @@
+{
+  "name": "uoptrack",
+  "version": "1.0.0",
+  "description": "UOP Web Scripting Module",
+  "main": "server.js",
+  "scripts": {
+    "migrations": "node ./database/migrations.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SamStenton/UOP-Track.git"
+  },
+  "author": "Samuel Stenton",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SamStenton/UOP-Track/issues"
+  },
+  "homepage": "https://github.com/SamStenton/UOP-Track#readme",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "mysql": "^2.13.0"
+  }
+}
