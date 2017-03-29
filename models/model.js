@@ -2,7 +2,8 @@ var DB          = require('../database/db.js');
 class Model {
     constructor(table) {
         // The table the model interacts with
-        this.table = table
+        this.table      = table
+        this.singular   = ""
         this.attributes = []
     }
 
@@ -55,6 +56,8 @@ class Model {
             db.insert(this.table, this.attributes);
         }
         // Exists
+        // 
+        return this;
     }
     update(attributes) {
         var db = new DB();
@@ -70,6 +73,7 @@ class Model {
         var instance = new this;
         instance.fill(attributes)
         instance.save()
+        return instance
     }
 
     static where(query, callback) {
@@ -82,8 +86,31 @@ class Model {
                 user.fill(results[res])
                 users.push(user)
             }
-
             callback(users)
+        });
+    }
+
+    /**
+     * Returns a many to many relationship on the current model
+     * Required that 'singular' property is set on each model
+     * It assumes that the primary key in each table is 'id'
+     * It assumes that the linking table columns are their
+     * singular name followed by '_id'      
+     *
+     * @param      {Model}   relation   The related model
+     * @param      {String}  link       The linking table name
+     * @return     {Promise}            A promise with results of query
+     */
+    manyToMany(relation, link) {
+        var db = new DB();
+        var self = this;
+        return new Promise(function(fulfill, reject) {
+            db.query(`
+                SELECT * FROM ${relation.table}
+                JOIN ${link} ON ${relation.table}.id = ${link}.${relation.singular}_id
+                WHERE ${link}.${self.singular}_id = ${self.getAttribute('id')}`, function(error, results) {
+                    fulfill(results)
+                })
         });
     }
 }
