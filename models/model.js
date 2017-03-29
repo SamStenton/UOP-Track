@@ -80,13 +80,12 @@ class Model {
         var db = new DB();
         var instance = new this;
         db.where(instance.table, query, function(error, results) {
-            var users = [];
-            for (var res in results) {
-                var user = new instance.constructor(instance.table)
-                user.fill(results[res])
-                users.push(user)
+            if (results.length > 0) {
+                results = results.map(function(row) {
+                    return self.scaffoldInstance(row, relation)
+                })
+                fulfill(results)
             }
-            callback(users)
         });
     }
 
@@ -105,13 +104,41 @@ class Model {
         var db = new DB();
         var self = this;
         return new Promise(function(fulfill, reject) {
-            db.query(`
-                SELECT * FROM ${relation.table}
-                JOIN ${link} ON ${relation.table}.id = ${link}.${relation.singular}_id
-                WHERE ${link}.${self.singular}_id = ${self.getAttribute('id')}`, function(error, results) {
-                    fulfill(results)
-                })
+            db
+            .select('*')
+            .from(relation.table)
+            .join(link, `${relation.table}.id`, `${link}.${relation.singular}_id`)
+            .where(`${link}.${self.singular}_id`, '=', `${self.getAttribute('id')}`)
+            .execute(function(error, results) {
+                if (results.length > 0) {
+                    self[relation.table] = results.map(function(row) {
+                        return self.scaffoldInstance(row, relation)
+                    })
+                    fulfill(self)
+                }
+
+            })
         });
+        // return new Promise(function(fulfill, reject) {
+        //     db.query(`
+        //         SELECT * FROM ${relation.table}
+        //         JOIN ${link} ON ${relation.table}.id = ${link}.${relation.singular}_id
+        //         WHERE ${link}.${self.singular}_id = ${self.getAttribute('id')}`, function(error, results) {
+        //             fulfill(results)
+        //         })
+        // });
+    }
+
+    /**
+     * Scaffold an instance of a Model
+     *
+     * @param      {Array}  attributes  Model  attributes
+     * @param      {Model}  type        Model type to scaffold
+     */
+    scaffoldInstance(attributes, type = this) {
+        var instance = new type.constructor(type.table)
+        instance.fill(attributes)
+        return instance
     }
 }
 

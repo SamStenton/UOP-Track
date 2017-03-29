@@ -8,7 +8,7 @@ class User extends Model {
     }
 
     courses() {
-        return this.manyToMany(new Course(), 'user_courses');
+        return this.manyToMany(new Course, 'user_courses');
     }
 }
 
