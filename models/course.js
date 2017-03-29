@@ -1,10 +1,10 @@
 var Model        = require('./model.js');
 
-class User extends Model {
+class Course extends Model {
     constructor() {
         super('courses')
         this.singular = 'course'
     }
 }
 
-module.exports = User
+module.exports = Course
