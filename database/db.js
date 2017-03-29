@@ -1,3 +1,4 @@
+var Promise = require('promise');
 class DB {
     constructor() {
         this.mysql      = require('mysql');
@@ -41,10 +42,25 @@ class DB {
         statement = statement.replace(/,\s*$/, "");
 
         // Create Table
-        this.query(`CREATE TABLE IF NOT EXISTS ${name} (${statement})`, function(error, results) {
-            if (error) {throw error}
-            console.log(results.message)
+        var self = this;
+        return new Promise(function(fulfill, reject) {
+            self.query(`CREATE TABLE IF NOT EXISTS ${name} (${statement})`, function(error, results) {
+                if (error) {reject(error)}
+                fulfill(name, results)
+            })
         })
+    }
+
+    /**
+     * Runs multiple table creates
+     *
+     * @param      {object}  tables
+     * @return     {promise}  Returns promise when all tables are created
+     */
+    createTables(tables) {
+        return Promise.all(Object.keys(tables).map(name => {
+            return this.createTable(name, tables[name])
+        }));
     }
 
     /**
