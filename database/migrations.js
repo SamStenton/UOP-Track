@@ -10,13 +10,17 @@ var db          = new DB();
 
 db.createTables({
     users: {
-        id: 'INT NOT NULL AUTO_INCREMENT PRIMRY KEY',
-        name: 'VARCHAR(64) NOT NULL',
-        email: 'VARCHAR(128) NOT NULL'
-    },
-    test: {
         id: 'INT NOT NULL AUTO_INCREMENT PRIMARY KEY',
         name: 'VARCHAR(64) NOT NULL',
         email: 'VARCHAR(128) NOT NULL'
+    },
+    courses: {
+        id: 'INT NOT NULL AUTO_INCREMENT PRIMARY KEY',
+        name: 'VARCHAR(64) NOT NULL'
+    },
+    user_courses: {
+        id: 'INT NOT NULL AUTO_INCREMENT PRIMARY KEY',
+        user_id: 'INT NOT NULL',
+        course_id: 'INT NOT NULL'
     }
-}).then(() => process.exit()).catch(errors => console.error(errors))
+}).then(() => process.exit()).catch(errors => console.error (errors))
