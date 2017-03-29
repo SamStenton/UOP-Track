@@ -1,0 +1,23 @@
+aside.sidebar {
+    display: flex;
+    justify-content: center;
+    min-width: 50px;
+    min-height: 100%;
+    background: #34495e;
+    flex: 0.5;
+    color: white;
+    ul {
+        text-align: center;
+        width: 100%;
+        margin-top: 20px;
+        list-style-type: none;
+        li {
+            padding: 10px 0;
+            width: 100%;
+            a {color: white;}
+            &:hover {
+                background: lighten(#34495e, 10);
+            }
+        }
+    }
+}

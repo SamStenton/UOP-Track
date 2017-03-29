@@ -26,6 +26,7 @@ app.use(bodyParser.json());
 
 app.use('/', routes.web);
 app.use('/api', routes.api);
+app.use(express.static(__dirname + '/resources'));
 
 var port = process.env.PORT || 8080;      
 

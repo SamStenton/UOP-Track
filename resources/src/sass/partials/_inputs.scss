@@ -1,0 +1,16 @@
+.input-group {
+    width: 400px;
+    margin-top: 10px;
+
+    label {
+        font-size: 70%;
+    }
+    input {
+        width: 100%;
+        padding: 5px;
+
+        &:focus {
+            outline: none;
+        }
+    }
+}
