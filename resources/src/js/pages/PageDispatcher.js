@@ -12,6 +12,7 @@ class PageDispatcher {
      */
     registerPages() {
         return [
+            './Dashboard.js',
             './CreateModule.js'
         ]
     }
@@ -28,6 +29,7 @@ class PageDispatcher {
             page = new (require(this.pages[page]))
             if (page.canFulfill()) {
                 page.execute()
+                console.log(page.selector + ' module loaded')
                 break;
             }
         }

@@ -1,5 +1,6 @@
 var Form = require('../classes/Form.js')
 var form = new Form();
+var axios = require('axios')
 
 class Page {
     constructor() {
@@ -81,6 +82,18 @@ class Page {
         for(let input in inputs) {
             this.clearInput(inputs[input])
         }
+    }
+
+    getRequest(url) {
+        return new Promise((resolve, reject) => {
+            axios.get(url)
+                .then(response => {
+                    resolve(response.data);
+                })
+                .catch(error => {
+                    reject(error.response.data);
+                });
+        });
     }
 }
 
