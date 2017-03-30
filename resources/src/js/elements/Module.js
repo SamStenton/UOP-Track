@@ -28,7 +28,7 @@ class ModuleElement {
             item = this.items[item]
             this.itemFactory.generate(item.module_items)
             let string = `
-            <div class="module">
+            <div class="module" data-module-id="${item['id']}">
               <h3>${item['name']} <small>${item['module_items'].length} Items</small></h3>
               <div class="items">
                     ${this.itemFactory.inject()}
@@ -61,6 +61,7 @@ class ModuleElement {
         }
         return this.generated
     }
+
 }
 
 module.exports = ModuleElement

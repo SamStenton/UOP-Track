@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,700');
+@import '/node_modules/tingle.js/dist/tingle.min.css';
 @import 'partials/resets';
 @import 'partials/sidebar';
 @import 'partials/inputs';
@@ -52,6 +53,13 @@ main {
                         align-items: center;
                         border-radius: 3px;
                         flex: 1;
+                        
+                        &:hover > .actions {
+                            width: 35px;
+                            justify-content: center;
+                        }
+
+                        
                         .type, .grade {
                             display: flex;
                             flex: 1;
@@ -63,7 +71,17 @@ main {
                             color: rgba(214, 214, 214, 0.8);
                             pointer-events: none;
                         }
-
+                        .actions {
+                            background: lighten(#34495e,40);
+                            height: 100%;
+                            display: flex;
+                            align-items: center;
+                            width: 0px;
+                            justify-content: flex-start;
+                            cursor: pointer;
+                            transition: all .3s ease-out;
+                        }
+                        
                         .details {
                             flex: 3;
                             border-right: 1px solid rgba(214, 214, 214, 0.5);

@@ -31,6 +31,7 @@ class DB {
         if (params != null) {
             query = this.mysql.format(query, params)
         }
+
         return new Promise((fulfill, reject) => {
             this.pool.getConnection((err, connection) =>  {
                 connection.query({sql: query, timeout: this.timeout}, function(error, results) {
@@ -104,9 +105,14 @@ class DB {
      * @param      {Array}  attributes   Attributes to change
      */
     update(table, where, attributes) {
-        this.query(`UPDATE ${table} SET ? WHERE ${where}`, attributes, function(error, results){
-            console.log(results)
-        });
+        var self = this;
+        return new Promise(function(fulfill, reject) {
+            self.query(`UPDATE ${table} SET ? WHERE ${where}`, Object.assign({}, attributes)).then(results => {
+                fulfill(results)
+            }).catch(error => {
+                console.log(error)
+            })
+        })
     }
 
     /**

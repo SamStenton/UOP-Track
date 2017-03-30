@@ -23,7 +23,8 @@
     "express": "^4.15.2",
     "express-hbs": "^1.0.4",
     "mysql": "^2.13.0",
-    "promise": "^7.1.1"
+    "promise": "^7.1.1",
+    "tingle.js": "^0.9.0"
   },
   "devDependencies": {
     "nodemon": "^1.11.0",

@@ -4,6 +4,8 @@ var router      = new (require('./router.js'))
 
 api.get('/modules', (req, res) => router.route(req, res, 'API/ModuleController@index'));
 api.post('/module/create', (req, res) => router.route(req, res, 'API/ModuleController@create'));
-api.post('post', (req, res) => router.route(req, res, 'API/AppController@index'));
+
+api.get('/module/item/:itemId', (req, res) => router.route(req, res, 'API/ModuleItemController@get'));
+api.post('/module/item/:itemId/update', (req, res) => router.route(req, res, 'API/ModuleItemController@update'));
 
 module.exports = api

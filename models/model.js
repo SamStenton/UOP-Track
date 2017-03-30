@@ -61,6 +61,13 @@ class Model {
                 })
             })
         }
+
+        return new Promise((fulfill, reject) => {
+            db.update(this.table, `id = ${this.id}`, this.attributes).then(result => {
+                fulfill(this)
+            })
+        })
+
     }
 
     update(attributes) {

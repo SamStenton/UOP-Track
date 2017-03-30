@@ -40,8 +40,8 @@ class Page {
      * @param      {string}  name    Input Name
      * @return     {HtmlElement}  Selected element
      */
-    getByName(name) {
-        return document.querySelectorAll(`[name="${name}"]`)[0]
+    getByName(name, container = document) {
+        return container.querySelectorAll(`[name="${name}"]`)[0]
     }
 
     /**
@@ -50,8 +50,12 @@ class Page {
      * @param      {String}  name    Class name 
      * @return     {HMTLElement}  Selected element
      */ 
-    getByClass(name) {
-        return document.querySelectorAll(`[class="${name}"]`)[0]
+    getByClass(name, single = true) {
+        let element = document.getElementsByClassName(name)
+        if (single) {
+            return element[0]
+        }
+        return element
     }
 
     /**

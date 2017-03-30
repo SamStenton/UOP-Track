@@ -26,13 +26,14 @@ class ModuleItem {
             item = this.items[item]
             let grade = (item.grade != "") ? `${item.grade}%` : 'Pending'
             let string = `
-                <div class="item">
+                <div class="item" data-module-item-id="${item['id']}">
                   <div class="type">?</div>
                   <div class="details">
                     <h4>${item.name}</h4>
                     <div class="weighting">Weighting: ${item.weighting}%</div>
                   </div>
                   <div class="grade ${grade}">${grade}</div>
+                  <div class="actions">Edit</div>
                 </div>`
 
             this.generated += string.trim()

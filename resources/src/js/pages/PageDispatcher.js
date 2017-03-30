@@ -1,3 +1,4 @@
+var req = require.context("../pages", true, /^\.\/.*\.js$/);
 
 class PageDispatcher {
     constructor() {
@@ -26,7 +27,7 @@ class PageDispatcher {
      */
     loadPage() {
         for(let page in this.pages) {
-            page = new (require(this.pages[page]))
+            page = new (req(this.pages[page]))
             if (page.canFulfill()) {
                 page.execute()
                 console.log(page.selector + ' module loaded')
