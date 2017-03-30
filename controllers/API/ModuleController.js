@@ -26,7 +26,7 @@ class ModuleController extends controller {
                     grade: submissions[key].grade
                 })
             }
-            res.json({message: 'wahhooo'});   
+            res.json({message: 'Module and Items created!'});   
         })
 
         // res.json({message: 'wahhooo'});   
