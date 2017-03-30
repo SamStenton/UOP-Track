@@ -14,6 +14,7 @@ class Model {
     fill(attributes) {
         for(var attribute in attributes) {
             this.setAttribute(attribute, attributes[attribute])
+            this[attribute] = attributes[attribute]
         }
     }
 
@@ -119,14 +120,31 @@ class Model {
 
             })
         });
-        // return new Promise(function(fulfill, reject) {
-        //     db.query(`
-        //         SELECT * FROM ${relation.table}
-        //         JOIN ${link} ON ${relation.table}.id = ${link}.${relation.singular}_id
-        //         WHERE ${link}.${self.singular}_id = ${self.getAttribute('id')}`, function(error, results) {
-        //             fulfill(results)
-        //         })
-        // });
+    }
+
+    /**
+     * Returns a oneToMany relationship on the current model
+     *
+     * @param      {<type>}   relation  The relation
+     * @return     {Promise}  { description_of_the_return_value }
+     */
+    oneToMany(relation) {
+        var db = new DB();
+        var self = this;
+        return new Promise(function(fulfill, reject) {
+            db
+            .select('*')
+            .from(relation.table)
+            .join(self.table, `${relation.table}.${self.singular}_id`, `${self.table}.id`)
+            .execute(function(error, results) {
+                if (results.length > 0) {
+                    self[relation.table] = results.map(function(row) {
+                        return self.scaffoldInstance(row, relation)
+                    })
+                    fulfill(self)
+                }
+            })
+        });
     }
 
     /**
