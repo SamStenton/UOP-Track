@@ -1,0 +1,52 @@
+{{> header title="Module create" }}
+  {{> sidebar }}
+  <div class="container page">
+    <main>
+      <div class="content" data-page="create-module">
+          <h1>Create module</h1>
+          <div class="element">
+            <p>Use this page to create extra modules</p>
+            
+            <form id="module_form">
+              <div class="input-group">
+                <label for="module_name">Module Name</label>
+                <input type="text" name="module_name" placeholder="Web Script">
+              </div>
+
+              <p>Add Submissions to module</p>
+              <div class="input-group">
+                <label for="">Submission Name</label>
+                <input type="text" name="submission_name" placeholder="Client-Side">
+              </div>
+
+              <div class="input-group">
+                <label for="">Weighting</label>
+                <div class="input-before">
+                  <input type="number" min="0" max="100" name="submission_weight" placeholder="50">
+                </div>
+              </div>
+
+              <div class="input-group">
+                <label for="">Recieved Grade (If applicable)</label>
+                <div class="input-before">
+                  <input type="number" min="0" max="100" name="submission_grade" placeholder="50">
+                </div>
+              </div>
+
+              <button id="addSubmission">Add Submission</button>
+              <button id="submitForm">Add module</button>
+            </form>
+          </div>
+
+          <div class="element">
+            <div class="module">
+              <h3 data-item="module_name">Your Module</h3>
+              <div data-item="items" class="items">
+                
+              </div>
+            </div>
+          </div>
+      </div>
+    </main>
+  </div>
+{{> footer }}
