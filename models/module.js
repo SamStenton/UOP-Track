@@ -20,7 +20,7 @@ class Module extends Model {
         this.module_items.forEach(item => {
             weighted = weighted + item.weightedPercentage()
         })
-        this.moduleTotal = (weighted * 100)
+        this.moduleTotal = Math.round((weighted * 100)).toFixed()
         return this
     }
 
@@ -33,8 +33,17 @@ class Module extends Model {
                 items++
             }
         })
-        this.moduleAverage = average / items
+        this.moduleAverage = Math.round(average / items).toFixed(2)
         return this
+    }
+
+    assingedPercentage() {
+        let assigned = 0
+        this.module_items.forEach(item => {
+            assigned = assigned + item.weighting
+        })
+        this.assingedPercentage = assigned
+        return this;
     }
 
     createItem(attributes) {
