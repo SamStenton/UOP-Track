@@ -25,6 +25,7 @@ class Model {
      */
     setAttribute(key, value) {
         this.attributes[key] = value;
+        this[key] = value;
     }
 
     /**
@@ -53,13 +54,15 @@ class Model {
 
         //Check if model exists
         if (!this.attributes['id']) {
-            // Does not exist
-            db.insert(this.table, this.attributes);
+            return new Promise((fulfill, reject) => {
+                db.insert(this.table, this.attributes).then(result => {
+                    this.setAttribute('id', result.insertId)
+                    fulfill(this)
+                })
+            })
         }
-        // Exists
-        // 
-        return this;
     }
+
     update(attributes) {
         var db = new DB();
         db.update(this.table, `id = '${this.getAttribute('id')}'`, attributes)
@@ -73,8 +76,7 @@ class Model {
     static create(attributes) {
         var instance = new this;
         instance.fill(attributes)
-        instance.save()
-        return instance
+        return instance.save();
     }
 
     static where(query, callback) {

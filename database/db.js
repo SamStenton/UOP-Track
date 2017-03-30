@@ -27,8 +27,17 @@ class DB {
      * @param   query     The sql query
      * @param   callback  The callback
      */
-    query(query, callback) {
-        this.connection.query({sql: query, timeout: this.timeout}, callback)
+    query(query, params = null) {
+        if (params != null) {
+            query = this.mysql.format(query, params)
+        }
+        
+        return new Promise((fulfill, reject) => {
+            this.connection.query({sql: query, timeout: this.timeout}, function(error, results) {
+                if (error) {reject(error)}
+                fulfill(results)
+            })
+        })
     }
 
     /**
@@ -50,8 +59,7 @@ class DB {
         // Create Table
         var self = this;
         return new Promise(function(fulfill, reject) {
-            self.query(`CREATE TABLE IF NOT EXISTS ${name} (${statement})`, function(error, results) {
-                if (error) {reject(error)}
+            self.query(`CREATE TABLE IF NOT EXISTS ${name} (${statement})`).then(results => {
                 fulfill(name, results)
             })
         })
@@ -76,10 +84,13 @@ class DB {
      * @param      {array}  columns  Data to enter
      */
     insert(table, columns) {
-        // Insert Item
-        this.query(`INSERT INTO ${table} SET ?`, Object.assign({}, columns), function(error, results) {
-            if (error) {throw error}
-            console.log(results.message)
+        var self = this;
+        return new Promise(function(fulfill, reject) {
+            self.query(`INSERT INTO ${table} SET ?`, Object.assign({}, columns)).then(results => {
+                fulfill(results)
+            }).catch(error => {
+                console.log(error)
+            })
         })
     }
 
