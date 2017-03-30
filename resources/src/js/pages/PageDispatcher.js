@@ -1,4 +1,3 @@
-var CreateModulePage = require('./CreateModule.js');
 
 class PageDispatcher {
     constructor() {
@@ -12,9 +11,9 @@ class PageDispatcher {
      * @return     {Object}  Pages Classes
      */
     registerPages() {
-        return {
-            CreateModulePage: new CreateModulePage()
-        }
+        return [
+            './CreateModule.js'
+        ]
     }
 
     /**
@@ -26,8 +25,9 @@ class PageDispatcher {
      */
     loadPage() {
         for(let page in this.pages) {
-            if (this.pages[page].canFulfill()) {
-                this.pages[page].execute()
+            page = new (require(this.pages[page]))
+            if (page.canFulfill()) {
+                page.execute()
                 break;
             }
         }

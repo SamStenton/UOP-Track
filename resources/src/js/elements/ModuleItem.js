@@ -3,7 +3,6 @@ class ModuleItem {
         this.container = itemContainer
         this.items = new Array()
         this.generated = ""
-        this.container.innerHTML = ""
     }
 
     /**
