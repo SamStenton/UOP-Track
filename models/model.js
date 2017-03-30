@@ -79,17 +79,32 @@ class Model {
         return instance.save();
     }
 
-    static where(query, callback) {
+    static where(before, oporator, after) {
         var db = new DB();
         var instance = new this;
-        db.where(instance.table, query, function(error, results) {
-            if (results.length > 0) {
-                results = results.map(function(row) {
-                    return self.scaffoldInstance(row, relation)
-                })
-                fulfill(results)
-            }
-        });
+        return new Promise((fulfill, reject) => {
+            db
+            .select('*')
+            .from(instance.table)
+            .where(before, oporator, after)
+            .execute().then(results => {
+                if (results.length > 0) {
+                    results = results.map(function(row) {
+                        return instance.scaffoldInstance(row)
+                    })
+                    fulfill(results)
+                }
+            }).catch(reject)
+        })
+
+        // db.where(instance.table, query, function(error, results) {
+        //     if (results.length > 0) {
+        //         results = results.map(function(row) {
+        //             return self.scaffoldInstance(row, relation)
+        //         })
+        //         fulfill(results)
+        //     }
+        // });
     }
 
     /**
@@ -138,7 +153,7 @@ class Model {
             .select('*')
             .from(relation.table)
             .join(self.table, `${relation.table}.${self.singular}_id`, `${self.table}.id`)
-            .execute(function(error, results) {
+            .execute().then(results => {
                 if (results.length > 0) {
                     self[relation.table] = results.map(function(row) {
                         return self.scaffoldInstance(row, relation)

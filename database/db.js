@@ -31,7 +31,6 @@ class DB {
         if (params != null) {
             query = this.mysql.format(query, params)
         }
-        
         return new Promise((fulfill, reject) => {
             this.connection.query({sql: query, timeout: this.timeout}, function(error, results) {
                 if (error) {reject(error)}
@@ -114,7 +113,7 @@ class DB {
      * @param      {(Function|string)}  query     The query
      * @param      {Function}           callback  The callback
      */
-    where(table, query, callback) {
+    where(table, query) {
         var whereString = ""
         for (var clause in query) {
             whereString += clause + " = '" + query[clause] + "',"
@@ -122,7 +121,7 @@ class DB {
         // Remove trailing comma
         whereString = whereString.replace(/,\s*$/, "");
 
-        this.query(`SELECT * FROM ${table} WHERE ${whereString}`, callback);
+        return this.query(`SELECT * FROM ${table} WHERE ${whereString}`);
     }
 
     /**
@@ -194,8 +193,9 @@ class DB {
      *
      * @param      {Function}  callback  The callback
      */
-    execute(callback) {
-        this.query(this.queryString, callback)
+    execute() {
+        console.log(this.queryString)
+        return this.query(this.queryString)
     }
 }
 
