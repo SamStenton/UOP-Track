@@ -143,7 +143,7 @@ class Model {
      * Returns a oneToMany relationship on the current model
      *
      * @param      {<type>}   relation  The relation
-     * @return     {Promise}  { description_of_the_return_value }
+     * @return     {Promise}  { Return the current Model with the attached relation }
      */
     oneToMany(relation) {
         var db = new DB();
@@ -162,6 +162,12 @@ class Model {
                 }
             })
         });
+    }
+
+    attach(relations) {
+        return relations.map(relation => {
+            return this[relation]()
+        })
     }
 
     /**
