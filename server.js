@@ -10,6 +10,8 @@ var bodyParser  = require('body-parser');
 var DB          = require('./database/db.js');
 var User        = require('./models/user.js');
 var Course      = require('./models/course.js');
+var Module      = require('./models/module.js');
+var ModuleItem  = require('./models/moduleItem.js');
 var db          = new DB();
 var hbs         = require('express-hbs');
 var routes      = require('./routes/routes.js') 
@@ -23,6 +25,12 @@ app.set('views', __dirname + '/views');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+// var module = new Module();
+// module.fill({id: 1})
+// module.createItem({
+//     name: 'Web App',
+//     weighting: 50
+// })
 
 app.use('/', routes.web);
 app.use('/api', routes.api);

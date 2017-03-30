@@ -11,6 +11,11 @@ class Module extends Model {
     items() {
         return this.oneToMany(new ModuleItem);
     }
+
+    createItem(attributes) {
+        attributes.module_id = this.id
+        return ModuleItem.create(attributes)
+    }
 }
 
 module.exports = Module
