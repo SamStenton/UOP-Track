@@ -5,6 +5,10 @@ class ModuleItem extends Model {
         super('module_items')
         this.singular = 'module_item'
     }
+
+    weightedPercentage() {
+        return (this.weighting / 100) * (this.grade / 100)
+    }
 }
 
 module.exports = ModuleItem

@@ -19,7 +19,8 @@ class ModuleItem {
      * using the template given from items passed
      * to the addItem method
      */
-    generate() {
+    generate(items = null) {
+        if (items != null) {this.items = items}
         this.generated = ""
         for (let item in this.items) {
             item = this.items[item]
@@ -29,14 +30,13 @@ class ModuleItem {
                   <div class="type">?</div>
                   <div class="details">
                     <h4>${item.name}</h4>
-                    <div class="weighting">Weighting: ${item.weight}%</div>
+                    <div class="weighting">Weighting: ${item.weighting}%</div>
                   </div>
-                  <div class="grade pending">${grade}</div>
+                  <div class="grade ${grade}">${grade}</div>
                 </div>`
 
             this.generated += string.trim()
         }
-
     }
 
     /**
@@ -44,7 +44,10 @@ class ModuleItem {
      * HTML parent
      */
     inject() {
-        this.container.innerHTML = this.generated
+        if (this.container != null) {
+            this.container.innerHTML = this.generated
+        }
+        return this.generated
     }
 }
 

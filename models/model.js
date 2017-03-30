@@ -152,13 +152,13 @@ class Model {
             db
             .select('*')
             .from(relation.table)
-            .join(self.table, `${relation.table}.${self.singular}_id`, `${self.table}.id`)
+            .where(`${self.singular}_id`, `=`, `${self.id}`)
             .execute().then(results => {
                 if (results.length > 0) {
-                    self[relation.table] = results.map(function(row) {
+                    var relations = results.map(function(row) {
                         return self.scaffoldInstance(row, relation)
                     })
-                    fulfill(self)
+                    fulfill(relations)
                 }
             })
         });

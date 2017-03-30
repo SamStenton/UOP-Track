@@ -1,4 +1,5 @@
 var Page = require('./Page.js')
+var ModuleFactory = require('../elements/Module.js')
 
 class Dashboard extends Page{
     constructor() {
@@ -6,6 +7,8 @@ class Dashboard extends Page{
         this.selector = "dashboard"
         this.submissions = []
         this.modules = {}
+        this.moduleFactory = new ModuleFactory(this.getByDataAttr('item="modules"'))
+
     }
 
     /**
@@ -23,8 +26,16 @@ class Dashboard extends Page{
      */
     execute() {
         this.getRequest('api/modules').then(modules => {
-            console.log(modules)
+            this.modules = modules
+
+            this.modules.forEach(module => {
+                this.moduleFactory.addItem(module)
+            })
+
+            this.moduleFactory.generate()
+            this.moduleFactory.inject()
         })
+
     }
 
 }

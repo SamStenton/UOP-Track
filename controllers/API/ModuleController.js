@@ -7,7 +7,9 @@ class ModuleController extends controller {
             Promise.all(modules.map(module => {
                 return Promise.all(module.attach(['items']))
             })).then(modules => {
-                res.json(modules.map(array => {return array[0]}))
+                res.json(modules.map(array => {
+                    return array[0].attach(['moduleTotal', 'moduleAverage'])[0]
+                }))
             })
         })
     }
