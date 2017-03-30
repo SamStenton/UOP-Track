@@ -3,8 +3,9 @@ var web         = express.Router();
 var router = new (require('./router.js'))
 
 web.get('/', (req, res) => router.route(req, res, 'AppController@index'));
-web.get('/about', (req, res) => router.route(req, res, 'AppController@about'));
-web.post('/post', (req, res) => router.route(req, res, 'AppController@post'));
+
+//Module Routes
+web.get('/module/create', (req, res) => router.route(req, res, 'ModuleController@create'));
 
 
 module.exports = web
