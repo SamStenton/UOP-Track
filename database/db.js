@@ -169,6 +169,16 @@ class DB {
     }
 
     /**
+     * Sacaffold a groupBy clause on query
+     *
+     * @param      {String}  by      The GroupBy
+     */
+    groupBy(by) {
+        this.queryString += `GROUP BY ${by} `
+        return this
+    }
+
+    /**
      * Execute a query build with the scaffold functions
      *
      * @param      {Function}  callback  The callback
