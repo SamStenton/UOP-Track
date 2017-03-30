@@ -6,10 +6,20 @@ class ModuleItem {
         this.container.innerHTML = ""
     }
 
+    /**
+     * Adds an item to the list of items
+     *
+     * @param      {Object}  item    The item
+     */
     addItem(item) {
         this.items.push(item)
     }
 
+    /**
+     * Generates an Module Submission html elements
+     * using the template given from items passed
+     * to the addItem method
+     */
     generate() {
         this.generated = ""
         for (let item in this.items) {
@@ -30,6 +40,10 @@ class ModuleItem {
 
     }
 
+    /**
+     * Inject the generated html into the given
+     * HTML parent
+     */
     inject() {
         this.container.innerHTML = this.generated
     }
