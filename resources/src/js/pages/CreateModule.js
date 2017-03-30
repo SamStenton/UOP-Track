@@ -44,7 +44,9 @@ class createModule extends Page{
     submitForm(event) {
         event.preventDefault();
         this.form.submissions = this.submissions;
-        this.form.post('/api/module/create')
+        this.form.post('/api/module/create').then(data => {
+            window.location = "/"
+        })
     }
 
     /**
