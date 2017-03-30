@@ -4,7 +4,7 @@ class DB {
         this.mysql              = require('mysql');
         this.timeout            = 10000
         this.queryString        = ""
-        this.connection = this.mysql.createConnection({
+        this.pool = this.mysql.createPool({
           host     : 'localhost',
           user     : 'root',
           password : '',
@@ -17,8 +17,8 @@ class DB {
      *
      * @return     {MYSQL Connection} 
      */
-    connection() {
-        return this.connection;
+    pool() {
+        return this.pool;
     }
 
     /**
@@ -32,9 +32,12 @@ class DB {
             query = this.mysql.format(query, params)
         }
         return new Promise((fulfill, reject) => {
-            this.connection.query({sql: query, timeout: this.timeout}, function(error, results) {
-                if (error) {reject(error)}
-                fulfill(results)
+            this.pool.getConnection((err, connection) =>  {
+                connection.query({sql: query, timeout: this.timeout}, function(error, results) {
+                    connection.release();
+                    if (error) {reject(error)}
+                    fulfill(results)
+                })
             })
         })
     }
