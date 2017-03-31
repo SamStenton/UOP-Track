@@ -1,4 +1,5 @@
 var Promise = require('promise');
+
 class DB {
     constructor() {
         this.mysql              = require('mysql');
@@ -6,9 +7,9 @@ class DB {
         this.queryString        = ""
         this.pool = this.mysql.createPool({
           host     : 'localhost',
-          user     : 'root',
-          password : '',
-          database : 'uoptrack'
+          user     : process.env.DATABASE_USER,
+          password : process.env.DATABASE_PASSWORD,
+          database : process.env.DATABASE
         });
     }
 

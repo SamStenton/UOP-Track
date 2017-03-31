@@ -13,7 +13,7 @@
     "type": "git",
     "url": "git+https://github.com/SamStenton/UOP-Track.git"
   },
-  "author": "Samuel Stenton",
+  "author": "UP778465",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/SamStenton/UOP-Track/issues"
@@ -25,6 +25,7 @@
     "express": "^4.15.2",
     "express-hbs": "^1.0.4",
     "mysql": "^2.13.0",
+    "node-env-file": "^0.1.8",
     "promise": "^7.1.1",
     "tingle.js": "^0.9.0"
   },
