@@ -201,10 +201,11 @@ The dashboard oporates at a basic level. Initially the plan was to have more int
 The reasoning behind not being able to implement these features was too much time was spent scaffolding the code base. 
 
 ### Maintainability
-Significant planning went into the desing of the code base. A lot of time was spent creating javascript modules that can be reusable. An exmaple of this is the `Model.js` class which makes interacting with javascript objects and the database really simple. This is documented futher up. A second example is the use of the `elements/Module.js` (again, documented above) to easily generate html components and inject them into the browser. 
+Significant planning went into the desing of the code base, hopefully this shows through. A lot of time was spent creating javascript modules that can be reusable. An exmaple of this is the `Model.js` class which makes interacting with javascript objects and the database really simple. This is documented futher up. A second example is the use of the `elements/Module.js` (again, documented above) to easily generate html components and inject them into the browser. 
 
-### Usability
+A basic Mocha Test has been implemented to begin testing the Model class. This is uncomplete but the intention is to complete it and test all other components. 
 
-### Accessibilty
+### Reflection
+As stated previously I'm not happy with the amount of features I have been able to introduce to the dashboard. I am happy however with the approach I have taken to building out the code base. 
 
-
+If I were to start the project again I would spend more time planning the exact features the dashboard should have. I'd also like to spend more time on creating an easier, more user friendly interface through better desinged HTML and CSS.
