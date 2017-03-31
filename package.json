@@ -4,7 +4,7 @@
   "description": "UOP Web Scripting Module",
   "main": "server.js",
   "scripts": {
-    "dashboard": "node ./server.js",
+    "dashboard": "node --use_strict ./server.js",
     "migrations": "node ./database/migrations.js",
     "migrations:drop": "node ./database/down.js",
     "test": "mocha tests"
