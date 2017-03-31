@@ -1,6 +1,7 @@
 # UOP Track
 
-`This project requires node v`
+`This project ideally requires node v6.7.0`
+
 Track coursework and exam marks through a easy to use dashboard.
 
 You can view the demo [here](https://uoptrack.samuelstenton.com)
@@ -63,6 +64,122 @@ web.get('/', (req, res) => router.route(req, res, 'AppController@index'));
 ```
 
 The above responds to requests to the index `/` and uses the `index()` method on the `AppController.js` controller. 
+
+*Database Interaction*
+
+There is an included database wrapper stored in `database/db.js` but most of the time data manipulation should be achieved through using the `Model` class. This provides an interface to help create/edit/delete objects without worrying about writing SQL.
+
+For example a User class that has extended the defaul 'Model'
+```
+class User() extends Model{
+    construct() {
+        super('the_user_table')
+        this.singular = 'user'
+    }
+}
+```
+
+Which can then be used:
+```
+var user = new User();
+user.fill({name: 'John Doe', email: john.doe@gmial.com});
+user.save();
+```
+
+This will create a user object with the above attributes and save it to the database. 
+
+Models can define relations with other models. An exmaple of this being used is within the `/models/module.js` class. 
+
+```
+/**
+ * Returns the related module items
+ *
+ * @return     {Relation}  The current object with the
+ * connected relation
+ */
+items() {
+    return this.oneToMany(new ModuleItem).then(items => {
+        this.module_items = items
+        return this
+    });
+}
+```
+
+This adds a relation param `module_items` onto the Module model. The relation is a oneToMany and so uses the `oneToMany()` method and simply defining the related model. 
+
+All methods available to models can be seen in the well documented `/moodels/model.js` file
+
+### Frontend
+Frontend javascript is stored in `resources/src/js`
+Sass css files are stored in `resources/src/sass`
+
+Each are compiled using gulp and webpack+babel and output in `resources/dist`
+
+The front end is mainly made up of javascript files. Each page usually has a related javascript class page.
+
+To add a new page create a new `yourPage.hbs` file and include the header and footer partials. To enable the use of a javascript page insert a `data-page` attribute onto the main page contianer. In the following example the attribute is `data-page="dashboard"`
+
+```
+{{> header title="UOP Track" }}
+  {{> sidebar }}
+  <div class="container" data-page="dashboard">
+    <main>
+      <div data-item="modules" class="content">
+          <div class="no-modules">
+              <h1>No Modules detected</h1>
+              <p>You dont appear to have created any modules yet. Go <a href="module/create">here</a> to create one</p>
+          </div>
+      </div>
+    </main>
+  </div>
+{{> footer }}
+```
+
+When the page is loaded by the browser the `Pages/PageDispatcher.js` is run to check if a corrisponding js page class can be run.
+
+A javascript page is stored within the `Pages` directory and extends the `Page.js` class. 
+
+A new page module should look like the following:
+
+```
+class dashboard extends Page{
+    constructor() {
+        super()
+        this.selector = "dashboard"
+    }
+
+    /**
+     * Checks for a unique element on a page to 
+     *
+     * @return     {boolean}  True if able to fulfill, False otherwise.
+     */
+    canFulfill() {
+        return document.querySelectorAll(`[data-page="${this.selector}"]`).length > 0;
+    }
+
+    /**
+     * Entry Method for the current page. Envoked via PageDispatcher.js
+     * 
+     */
+    execute() {
+        //Method run when the object can fulfill the current page request
+        console.log('Do stuff on the dashboard page')
+    }
+```
+
+Each page should have a `selector` attribute with the value of the `data-page` attribute we added to the html.
+
+The `canFulfill()` method checks for that selector on the current page. If it finds it the `PageDispatcher` runs the `execute` method. 
+
+Javascript relating the current page should be stored within this method.
+
+*Helpers*
+
+There are a couple helper files within the project. The first are stored within the `elements/` directory. These are what generate and output to the browser re-usable html components. 
+
+The two currently created are `Module` and `ModuleItem` which generate modules and submiussions respectivly. 
+
+Another useful Helper class is the `Form` class stored within `classes/Form.js` this creates an easy way to create get/post requests to the server. 
 
 ## Marking
 
