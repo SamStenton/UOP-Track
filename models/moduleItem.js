@@ -6,6 +6,13 @@ class ModuleItem extends Model {
         this.singular = 'module_item'
     }
 
+    /**
+     * Calculates the weighted percentage 
+     * for the current model using the 
+     * given grade and weighting. 
+     *
+     * @return     {Int}  The weighted percentage
+     */
     weightedPercentage() {
         return (this.weighting / 100) * (this.grade / 100)
     }

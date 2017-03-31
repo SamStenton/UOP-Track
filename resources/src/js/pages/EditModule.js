@@ -38,7 +38,6 @@ class EditModule extends Page{
 
         this.getRequest(`/api/module/${this.moduleId}`).then(module => {
             this.module = module
-            console.log(module)
             this.getByName('module_name').value = module.name
             this.submissions = module.module_items
             this.form.name = module.name
@@ -48,11 +47,20 @@ class EditModule extends Page{
         })
     }
 
+    /**
+     * Sets the inital items that are editable
+     * by the user
+     *
+     * @param      {Moduel}  module  The module
+     */
     populateDisplay(module) {
         this.moduleFactory.generate([module])
         this.moduleFactory.inject()
     }
 
+    /**
+     * Adds event listeners.
+     */
     addEventListeners() {
         this.getByName('module_name').addEventListener('keyup', (event) => {
             this.form.name = event.target.value

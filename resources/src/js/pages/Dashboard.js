@@ -40,6 +40,10 @@ class Dashboard extends Page{
         })
     }
 
+    /**
+     * Insert modules into the page
+     * 
+     */
     insertModules() {
         this.modules.forEach(module => {
             this.moduleFactory.addItem(module)
@@ -50,12 +54,21 @@ class Dashboard extends Page{
         this.addEditEventListeners()
     }
 
+    /**
+     * Adds edit event listeners.
+     */
     addEditEventListeners() {
         Array.from(this.getByClass('actions', false)).forEach(el => {
             el.addEventListener('click', event => this.editItem(event))
         })
     }
 
+    /**
+     * Opens the editItem popup modal. This allows the user 
+     * to both update and delete the selected item
+     *
+     * @param      {Event}  event   The event
+     */
     editItem(event) {
         let itemId = event.target.parentElement.dataset.moduleItemId
         this.getRequest(`api/module/item/${itemId}`).then(item => {
@@ -90,6 +103,14 @@ class Dashboard extends Page{
         })
     }
 
+    /**
+     * Takes the users edits of the item and pushes
+     * them to the server. Once completed the the 
+     * page items on the page are refreshed
+     *
+     * @param      {Int}  itemId  The item identifier
+     * @param      {HTMLElement}  parent form element
+     */
     updateItem(itemId, parent) {
         this.itemForm.id = itemId
         this.itemForm.name = this.getByName('name', parent).value
@@ -102,6 +123,13 @@ class Dashboard extends Page{
         })
     }
 
+    /**
+     * Deletes an item from the database.
+     * Once completed the the page items
+     * on the page are refreshed
+     *
+     * @param      {Int}  itemId  The item identifier
+     */
     deleteItem(itemId) {
         this.deleteForm.post(`api/module/item/${itemId}/delete`).then(result => {
             this.moduleFactory = new ModuleFactory(this.getByDataAttr('item="modules"'))
@@ -109,6 +137,11 @@ class Dashboard extends Page{
         })
     }
 
+    /**
+     * Creates the modal instance
+     *
+     * @return     {Modal} The modal instance
+     */
     createModal() {
         return new Modal.modal({
             footer: true,

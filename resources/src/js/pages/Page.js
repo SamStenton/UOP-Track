@@ -88,6 +88,14 @@ class Page {
         }
     }
 
+    /**
+     * Executes a get request to a given url
+     * Useful for loading data during the 
+     * execute method
+     *
+     * @param      {<type>}   url     The url
+     * @return     {Promise}  The request.
+     */
     getRequest(url) {
         return new Promise((resolve, reject) => {
             axios.get(url)

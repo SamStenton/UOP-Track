@@ -2,6 +2,13 @@ var controller = require('../controller.js')
 var Module = require('../../models/module.js')
 
 class ModuleController extends controller {
+
+    /**
+     * Gets all modules.
+     *
+     * @param      {Object}  req     The request
+     * @param      {Object}  res     The response
+     */
     index(req, res) {
         Module.where('course_id', '=','1').then(modules => {
             Promise.all(modules.map(module => {
@@ -14,6 +21,12 @@ class ModuleController extends controller {
         })
     }
 
+    /**
+     * Get a single module by ID
+     *
+     * @param      {req}  req     The request
+     * @param      {res}  res     The responce
+     */
     get(req, res) {
         Module.where('id', '=', req.params.itemId).then(module => {
             Promise.all(module[0].attach(['items'])).then(module => {
@@ -24,8 +37,13 @@ class ModuleController extends controller {
         })
     }
 
+    /**
+     * Create a module and attach submissions
+     *
+     * @param      {req}  req     The request
+     * @param      {res}  res     The response
+     */
     create(req, res) {
-        // console.log(req.body)
         Module.create({
             course_id: 1,
             name: req.body.name
@@ -40,10 +58,15 @@ class ModuleController extends controller {
             }
             res.json({message: 'Module and Items created!'});   
         })
-
-        // res.json({message: 'wahhooo'});   
     }
 
+    /**
+     * Update an item and attach 
+     * any (new) submissions
+     *
+     * @param      {req}  req     The request
+     * @param      {res}  res     The response
+     */
     update(req, res) {
         let item = new Module()
         item.fill({id: req.body.id, name: req.body.name})

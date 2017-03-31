@@ -70,22 +70,44 @@ class Model {
 
     }
 
+    /**
+     * Update the model by its id
+     *
+     * @param  {object}  attributes  The attributes
+     */
     update(attributes) {
         var db = new DB();
         db.update(this.table, `id = '${this.getAttribute('id')}'`, attributes)
     }
 
+    /**
+     * Remove the current model from the database
+     */
     remove() {
         var db = new DB();
         db.delete(this.table, `id = '${this.getAttribute('id')}'`);
     }
 
+    /**
+     * Create a new model and save it to the database
+     *
+     * @param      {Oject}  attributes  Model attributes
+     * @return     {Model}  The created Model
+     */
     static create(attributes) {
         var instance = new this;
         instance.fill(attributes)
         return instance.save();
     }
 
+    /**
+     * Runs a where query to find models
+     *
+     * @param      {String}   before    The before
+     * @param      {String}   oporator  The oporator
+     * @param      {String}   after     The after
+     * @return     {Promise}  The results of the query
+     */
     static where(before, oporator, after) {
         var db = new DB();
         var instance = new this;
@@ -103,15 +125,6 @@ class Model {
                 }
             }).catch(reject)
         })
-
-        // db.where(instance.table, query, function(error, results) {
-        //     if (results.length > 0) {
-        //         results = results.map(function(row) {
-        //             return self.scaffoldInstance(row, relation)
-        //         })
-        //         fulfill(results)
-        //     }
-        // });
     }
 
     /**
@@ -171,6 +184,12 @@ class Model {
         });
     }
 
+    /**
+     * Attach model relations
+     *
+     * @param      {Array}  relations  Model relations
+     * @return     {Array}  The array of executed relations
+     */
     attach(relations) {
         return relations.map(relation => {
             return this[relation]()
