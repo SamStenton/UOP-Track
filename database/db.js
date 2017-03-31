@@ -28,8 +28,8 @@ class DB {
      * @param   query     The sql query
      * @param   callback  The callback
      */
-    query(query, params = null) {
-        if (params != null) {
+    query(query, params) {
+        if (params != undefined) {
             query = this.mysql.format(query, params)
         }
 
