@@ -9,5 +9,6 @@ api.post('/module/:itemId/update', (req, res) => router.route(req, res, 'API/Mod
 
 api.get('/module/item/:itemId', (req, res) => router.route(req, res, 'API/ModuleItemController@get'));
 api.post('/module/item/:itemId/update', (req, res) => router.route(req, res, 'API/ModuleItemController@update'));
+api.post('/module/item/:itemId/delete', (req, res) => router.route(req, res, 'API/ModuleItemController@delete'));
 
 module.exports = api

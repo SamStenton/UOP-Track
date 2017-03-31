@@ -16,8 +16,13 @@ class ModuleItemController extends controller {
         item.save().then(results => {
             res.json(results)
         })
+    }
 
-
+    delete(req, res) {
+        let item = new Item()
+        item.fill({id: req.params.itemId})
+        item.remove()
+        res.json({message: 'Thats goneee!'})
     }
 }
 

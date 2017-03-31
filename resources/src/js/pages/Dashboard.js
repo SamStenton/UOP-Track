@@ -16,6 +16,7 @@ class Dashboard extends Page{
             weighting: 0,
             grade: 0
         });
+        this.deleteForm = new Form();
 
     }
 
@@ -80,6 +81,11 @@ class Dashboard extends Page{
                 this.updateItem(itemId, this.modal.modalBoxContent)
                 this.modal.close();
             });
+            this.modal.addFooterBtn('Delete Item', 'tingle-btn tingle-btn--danger', event => {
+                this.deleteItem(itemId)
+                this.modal.close();
+            });
+
             this.modal.open();
         })
     }
@@ -95,6 +101,14 @@ class Dashboard extends Page{
             this.execute()
         })
     }
+
+    deleteItem(itemId) {
+        this.deleteForm.post(`api/module/item/${itemId}/delete`).then(result => {
+            this.moduleFactory = new ModuleFactory(this.getByDataAttr('item="modules"'))
+            this.execute()
+        })
+    }
+
     createModal() {
         return new Modal.modal({
             footer: true,
