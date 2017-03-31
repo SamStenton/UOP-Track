@@ -69,6 +69,21 @@ class DB {
     }
 
     /**
+     * Drops a table
+     *
+     * @param      {String}   name    Table name to drop
+     * @return     {Promise}  
+     */
+    dropTable(name) {
+        var self = this;
+        return new Promise(function(fulfill, reject) {
+            self.query(`DROP TABLE IF EXISTS ${name}`).then(results => {
+                fulfill(name, results)
+            })
+        })
+    }
+
+    /**
      * Runs multiple table creates
      *
      * @param      {object}  tables
@@ -77,6 +92,18 @@ class DB {
     createTables(tables) {
         return Promise.all(Object.keys(tables).map(name => {
             return this.createTable(name, tables[name])
+        }));
+    }
+
+    /**
+     * Runs multiple table drops
+     *
+     * @param      {Array}  tables  The tables
+     * @return     {Promise}  
+     */
+    dropTables(tables) {
+        return Promise.all(tables.map(name => {
+            return this.dropTable(name)
         }));
     }
 

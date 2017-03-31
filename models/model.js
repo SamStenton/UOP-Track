@@ -51,7 +51,6 @@ class Model {
      */
     save() {
         var db = new DB();
-
         //Check if model exists
         if (!this.attributes['id']) {
             return new Promise((fulfill, reject) => {
