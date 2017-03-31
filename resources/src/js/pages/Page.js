@@ -64,8 +64,8 @@ class Page {
      * @param      {String}  name    Data attribute
      * @return     {HTMLElement}  Selected element
      */
-    getByDataAttr(name) {
-        return document.querySelectorAll(`[data-${name}`)[0]
+    getByDataAttr(name, element = document) {
+        return element.querySelectorAll(`[data-${name}`)[0]
     }
 
     /**

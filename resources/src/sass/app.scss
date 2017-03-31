@@ -25,7 +25,15 @@ main {
 
             .module {
                 margin-left: 20px;
-                h3 {margin: 20px 0; font-weight: 300; small{font-size: 60%; color: grey}}
+                h3 {
+                    margin: 20px 0; font-weight: 300; 
+                    small{font-size: 60%; color: grey}
+                    &:hover > .a {
+                        color: #34495e;
+                    }
+                    a {color: lighten(#34495e,40); text-decoration: none; &:hover { color: #34495e;}}
+                    .module-action {display: inline-block; margin-right: 20px; float: right; cursor: pointer; color: lighten(#34495e,40);}
+                }
                 // &:first-child {
                 //     margin-left: 20px;
                 // }

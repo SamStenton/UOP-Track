@@ -14,7 +14,8 @@ class PageDispatcher {
     registerPages() {
         return [
             './Dashboard.js',
-            './CreateModule.js'
+            './CreateModule.js',
+            './EditModule.js'
         ]
     }
 

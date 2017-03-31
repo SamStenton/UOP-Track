@@ -6,6 +6,10 @@ class ModuleController extends controller {
         res.render('module/create');   
     } 
 
+    edit(req, res) {
+        res.render('module/edit', {itemId: req.params.itemId});   
+    } 
+
 }
 
 module.exports = ModuleController

@@ -1,8 +1,9 @@
 class ModuleItem {
-    constructor(itemContainer) {
+    constructor(itemContainer, withEditLinks = true) {
         this.container = itemContainer
         this.items = new Array()
         this.generated = ""
+        this.editLinks = withEditLinks
     }
 
     /**
@@ -22,6 +23,7 @@ class ModuleItem {
     generate(items = null) {
         if (items != null) {this.items = items}
         this.generated = ""
+        let editLink = this.editLinks ? '' : 'style="display: none;"'
         for (let item in this.items) {
             item = this.items[item]
             let grade = (item.grade != "") ? `${item.grade}%` : 'Pending'
@@ -33,7 +35,7 @@ class ModuleItem {
                     <div class="weighting">Weighting: ${item.weighting}%</div>
                   </div>
                   <div class="grade ${grade}">${grade}</div>
-                  <div class="actions">Edit</div>
+                  <div class="actions" ${editLink}>Edit</div>
                 </div>`
 
             this.generated += string.trim()
