@@ -3,7 +3,10 @@
   <div class="container" data-page="dashboard">
     <main>
       <div data-item="modules" class="content">
-          {{> module }}
+          <div class="no-modules">
+              <h1>No Modules detected</h1>
+              <p>You dont appear to have created any modules yet. Go <a href="module/create">here</a> to create one</p>
+          </div>
       </div>
     </main>
   </div>
