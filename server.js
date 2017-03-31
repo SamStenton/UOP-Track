@@ -25,12 +25,18 @@ app.set('views', __dirname + '/views');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-// var module = new Module();
-// module.fill({id: 1})
-// module.createItem({
-//     name: 'Web App',
-//     weighting: 50
+// Module.where('course_id', '=','1').then(modules => {
+//     console.log(modules)
+// }).catch(console.log)
+
+// Module.create({name: 'testing', course_id: 1}).then(module => {
+//     module.createItem({
+//         name: 'Web App',
+//         weighting: 50 
+//     })
 // })
+
+
 
 app.use('/', routes.web);
 app.use('/api', routes.api);
