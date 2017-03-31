@@ -59,7 +59,7 @@ The project follows the *Model View Controller* pattern.
 Entry into the system goes through the routes files. Currently there are only two `web.js` and `api.js` stored within the `/routes` directory. 
 
 To register a route and link it to a controller you structure as following.
-```
+```javascript
 web.get('/', (req, res) => router.route(req, res, 'AppController@index'));
 ```
 
@@ -70,7 +70,7 @@ The above responds to requests to the index `/` and uses the `index()` method on
 There is an included database wrapper stored in `database/db.js` but most of the time data manipulation should be achieved through using the `Model` class. This provides an interface to help create/edit/delete objects without worrying about writing SQL.
 
 For example a User class that has extended the defaul 'Model'
-```
+```javascript
 class User() extends Model{
     construct() {
         super('the_user_table')
@@ -80,7 +80,7 @@ class User() extends Model{
 ```
 
 Which can then be used:
-```
+```javascript
 var user = new User();
 user.fill({name: 'John Doe', email: john.doe@gmial.com});
 user.save();
@@ -90,7 +90,7 @@ This will create a user object with the above attributes and save it to the data
 
 Models can define relations with other models. An exmaple of this being used is within the `/models/module.js` class. 
 
-```
+```javascript
 /**
  * Returns the related module items
  *
@@ -119,7 +119,7 @@ The front end is mainly made up of javascript files. Each page usually has a rel
 
 To add a new page create a new `yourPage.hbs` file and include the header and footer partials. To enable the use of a javascript page insert a `data-page` attribute onto the main page contianer. In the following example the attribute is `data-page="dashboard"`
 
-```
+```html
 {{> header title="UOP Track" }}
   {{> sidebar }}
   <div class="container" data-page="dashboard">
@@ -141,7 +141,7 @@ A javascript page is stored within the `Pages` directory and extends the `Page.j
 
 A new page module should look like the following:
 
-```
+```javascript
 class dashboard extends Page{
     constructor() {
         super()
@@ -163,9 +163,11 @@ class dashboard extends Page{
      */
     execute() {
         //Method run when the object can fulfill the current page request
-        console.log('Do stuff on the dashboard page')
+        console.log('Do stuff on the dashboard page');
     }
+}
 ```
+
 
 Each page should have a `selector` attribute with the value of the `data-page` attribute we added to the html.
 
@@ -181,7 +183,7 @@ The two currently created are `Module` and `ModuleItem` which generate modules a
 
 Another useful Helper class is the `Form` class stored within `classes/Form.js` this creates an easy way to create get/post requests to the server. 
 
-## Marking
+## Marking Aid
 
 ### Functionality
 
@@ -199,4 +201,10 @@ The dashboard oporates at a basic level. Initially the plan was to have more int
 The reasoning behind not being able to implement these features was too much time was spent scaffolding the code base. 
 
 ### Maintainability
+Significant planning went into the desing of the code base. A lot of time was spent creating javascript modules that can be reusable. An exmaple of this is the `Model.js` class which makes interacting with javascript objects and the database really simple. This is documented futher up. A second example is the use of the `elements/Module.js` (again, documented above) to easily generate html components and inject them into the browser. 
+
+### Usability
+
+### Accessibilty
+
 
