@@ -1,6 +1,7 @@
+var env         = require('node-env-file');
+env(__dirname + '/../.env');
 var DB          = require('./db');
 var db          = new DB();
-
 
 // db.createTable('users', {
 //     id: 'INT NOT NULL AUTO_INCREMENT PRIMARY KEY',
